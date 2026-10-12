@@ -86,7 +86,7 @@ tcg-card-community/
 * [x] **Step 3 (Android done): Implement `AppConfig`** in `app_config.dart`, reading `String.fromEnvironment` values and failing fast on an empty one. Add Android flavors and iOS schemes named `dev`, `staging` and `prod`, each with its own bundle ID and app name so all three install side by side, and an icon banner for dev and staging. `dev` points at local Supabase (`supabase start`).
 * [x] **Step 4: Run the tests again.** Expected: PASS.
 * [x] **Step 5 (file written): Create `ci.yml`** to run `flutter analyze` and `flutter test` on every push. Expected: a green run on the first push.
-* [ ] **Step 6: Commit** with `feat: scaffold flutter app, flavors and ci`.
+* [x] **Step 6: Commit** with `feat: scaffold flutter app, flavors and ci`.
 
 ### Task 1b: Hosted Supabase projects, secrets and deploy pipeline
 
@@ -107,7 +107,7 @@ Task 6 Step 5, Task 20 and Task 21 all run against hosted projects, so they are 
 * [x] **Step 3 (staging only; prod secrets moved to pending): Set the secrets.** Add the GitHub repository secrets and run `supabase secrets set` on each project for the Edge Function secrets. Provider keys not yet bought stay empty and are listed as open in `supabase-setup.md`; the functions that need them fail with a clear error and not a crash.
 * [x] **Step 4 (files written; first run is Step 5): Write `deploy-staging.yml`** to run on every push to `main` after the CI workflow passes: `supabase db push` then `supabase functions deploy`, both against staging. Write `deploy-prod.yml` as manual (`workflow_dispatch`) behind a GitHub environment that needs an approval, running the same two commands against `prod`.
 * [ ] **Step 5: Verify.** Expected: a green staging deploy on the first push with no migrations yet, and a manual `prod` run waiting for approval and not deploying until it is given.
-* [ ] **Step 6: Commit** with `chore: supabase environments and deploy pipeline`.
+* [x] **Step 6: Commit** with `chore: supabase environments and deploy pipeline`.
 
 ### Task 2: TCGdex source test
 
@@ -127,7 +127,7 @@ This task decides whether TCGdex is good enough. Nothing later is built on it un
 * [x] **Step 4: Run the unit tests.** Expected: PASS.
 * [ ] **Step 5 (TODO, no network to api.tcgdex.net from the sandbox): Run it against live TCGdex and write `report.md`.** Pass means at least 98% of the newest sets' cards are found with rarity and image, at least 90% have a TCGplayer or Cardmarket price, and all 20 tricky cards are found with the right variant. On a fail, record Scrydex as the replacement behind the provider interface in Task 7, and tell the owner before continuing.
 * [ ] **Step 6: Read the licence** in the `tcgdex/cards-database` repository and the TCGdex terms, then record whether commercial use in a public app is allowed in the design doc's open questions.
-* [ ] **Step 7: Commit** with `chore: tcgdex source test and report`.
+* [x] **Step 7: Commit** with `chore: tcgdex source test and report`.
 
 ### Task 3: Foil shader spike
 
