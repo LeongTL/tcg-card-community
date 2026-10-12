@@ -79,13 +79,13 @@ tcg-card-community/
 
 **Interfaces:**
 
-- Produces: `class AppConfig { final String flavor; final String supabaseUrl; final String supabaseAnonKey; factory AppConfig.fromEnvironment(); }` with flavors `staging` and `prod`, read from `--dart-define-from-file`.
+- Produces: `class AppConfig { final String flavor; final String supabaseUrl; final String supabaseAnonKey; factory AppConfig.fromEnvironment(); }` with flavors `dev` (local Supabase), `staging` and `prod`, read from `--dart-define-from-file`.
 
-* [ ] **Step 1: Write failing tests in `app_config_test.dart`:** `reads_flavor_and_keys_from_environment` (a map with `FLAVOR=staging`, `SUPABASE_URL`, `SUPABASE_ANON_KEY` gives matching fields) and `throws_when_a_key_is_missing` (a missing `SUPABASE_URL` throws `StateError`).
-* [ ] **Step 2: Run `flutter test app/test/core/app_config_test.dart`.** Expected: FAIL, `AppConfig` is not defined.
-* [ ] **Step 3: Implement `AppConfig`** in `app_config.dart`, reading `String.fromEnvironment` values and failing fast on an empty one. Add Android flavors and iOS schemes named `staging` and `prod`, with a different app name and icon banner for staging.
-* [ ] **Step 4: Run the tests again.** Expected: PASS.
-* [ ] **Step 5: Create `ci.yml`** to run `flutter analyze` and `flutter test` on every push. Expected: a green run on the first push.
+* [x] **Step 1: Write failing tests in `app_config_test.dart`:** `reads_flavor_and_keys_from_environment` (a map with `FLAVOR=staging`, `SUPABASE_URL`, `SUPABASE_ANON_KEY` gives matching fields) and `throws_when_a_key_is_missing` (a missing `SUPABASE_URL` throws `StateError`).
+* [x] **Step 2: Run `flutter test app/test/core/app_config_test.dart`.** Expected: FAIL, `AppConfig` is not defined.
+* [x] **Step 3 (Android done): Implement `AppConfig`** in `app_config.dart`, reading `String.fromEnvironment` values and failing fast on an empty one. Add Android flavors and iOS schemes named `dev`, `staging` and `prod`, each with its own bundle ID and app name so all three install side by side, and an icon banner for dev and staging. `dev` points at local Supabase (`supabase start`).
+* [x] **Step 4: Run the tests again.** Expected: PASS.
+* [x] **Step 5 (file written): Create `ci.yml`** to run `flutter analyze` and `flutter test` on every push. Expected: a green run on the first push.
 * [ ] **Step 6: Commit** with `feat: scaffold flutter app, flavors and ci`.
 
 ### Task 1b: Hosted Supabase projects, secrets and deploy pipeline
@@ -102,10 +102,10 @@ Task 6 Step 5, Task 20 and Task 21 all run against hosted projects, so they are 
 - Produces: two hosted Supabase projects (`staging`, `prod`) in the region closest to Malaysia (Singapore); GitHub repository secrets `SUPABASE_ACCESS_TOKEN`, `STAGING_PROJECT_REF`, `STAGING_DB_PASSWORD`, `PROD_PROJECT_REF`, `PROD_DB_PASSWORD`; Edge Function secrets `PRICE_PROVIDER_KEY` (Pokémon Price Tracker), `FX_API_KEY` if the chosen rate source needs one, and the SMS provider credentials, set per project with `supabase secrets set`.
 - Rule: the service-role key lives only in Edge Function secrets and is never in the app, `.env.example` or the repository. The app gets only the project URL and anon key.
 
-* [ ] **Step 1: Create the `staging` and `prod` projects** in the Supabase dashboard, turn on daily backups for `prod`, and write both project refs and the region in `docs/ops/supabase-setup.md`.
-* [ ] **Step 2: Link locally** with `supabase link --project-ref <staging>` and check that `supabase db push --dry-run` reports nothing to apply and no errors.
-* [ ] **Step 3: Set the secrets.** Add the GitHub repository secrets and run `supabase secrets set` on each project for the Edge Function secrets. Provider keys not yet bought stay empty and are listed as open in `supabase-setup.md`; the functions that need them fail with a clear error and not a crash.
-* [ ] **Step 4: Write `deploy-staging.yml`** to run on every push to `main` after the CI workflow passes: `supabase db push` then `supabase functions deploy`, both against staging. Write `deploy-prod.yml` as manual (`workflow_dispatch`) behind a GitHub environment that needs an approval, running the same two commands against `prod`.
+* [x] **Step 1 (prod daily backups moved to pending): Create the `staging` and `prod` projects** in the Supabase dashboard, turn on daily backups for `prod`, and write both project refs and the region in `docs/ops/supabase-setup.md`.
+* [x] **Step 2 (staging linked): Link locally** with `supabase link --project-ref <staging>` and check that `supabase db push --dry-run` reports nothing to apply and no errors.
+* [x] **Step 3 (staging only; prod secrets moved to pending): Set the secrets.** Add the GitHub repository secrets and run `supabase secrets set` on each project for the Edge Function secrets. Provider keys not yet bought stay empty and are listed as open in `supabase-setup.md`; the functions that need them fail with a clear error and not a crash.
+* [x] **Step 4 (files written; first run is Step 5): Write `deploy-staging.yml`** to run on every push to `main` after the CI workflow passes: `supabase db push` then `supabase functions deploy`, both against staging. Write `deploy-prod.yml` as manual (`workflow_dispatch`) behind a GitHub environment that needs an approval, running the same two commands against `prod`.
 * [ ] **Step 5: Verify.** Expected: a green staging deploy on the first push with no migrations yet, and a manual `prod` run waiting for approval and not deploying until it is given.
 * [ ] **Step 6: Commit** with `chore: supabase environments and deploy pipeline`.
 
@@ -121,11 +121,11 @@ This task decides whether TCGdex is good enough. Nothing later is built on it un
 
 - Produces: `checkCards(ids: string[], client: TcgdexClient): Promise<CardReport[]>` where `CardReport = { id: string; found: boolean; hasRarity: boolean; hasImage: boolean; hasPrice: boolean; priceSources: string[] }`. Also produces a pass or fail decision in `report.md`.
 
-* [ ] **Step 1: Write failing tests** in `check_coverage.test.ts` with a stubbed client: `reports_missing_price_as_false` (a card with no pricing gives `hasPrice: false` and `priceSources: []`) and `reports_unknown_card_as_not_found` (a 404 gives `found: false`).
-* [ ] **Step 2: Run `npx vitest tools/source-test`.** Expected: FAIL.
-* [ ] **Step 3: Implement `checkCards`** against the TCGdex REST API in English, using the three newest sets from `/sets` plus the 20 tricky cards in `cards.json` (reprints, promos, holo and reverse holo variants).
-* [ ] **Step 4: Run the unit tests.** Expected: PASS.
-* [ ] **Step 5: Run it against live TCGdex and write `report.md`.** Pass means at least 98% of the newest sets' cards are found with rarity and image, at least 90% have a TCGplayer or Cardmarket price, and all 20 tricky cards are found with the right variant. On a fail, record Scrydex as the replacement behind the provider interface in Task 7, and tell the owner before continuing.
+* [x] **Step 1: Write failing tests** in `check_coverage.test.ts` with a stubbed client: `reports_missing_price_as_false` (a card with no pricing gives `hasPrice: false` and `priceSources: []`) and `reports_unknown_card_as_not_found` (a 404 gives `found: false`).
+* [x] **Step 2: Run `npx vitest tools/source-test`.** Expected: FAIL.
+* [x] **Step 3 (`cards.json` still empty, TODO: the 20 tricky card IDs; `run.ts` written but never run): Implement `checkCards`** against the TCGdex REST API in English, using the three newest sets from `/sets` plus the 20 tricky cards in `cards.json` (reprints, promos, holo and reverse holo variants).
+* [x] **Step 4: Run the unit tests.** Expected: PASS.
+* [ ] **Step 5 (TODO, no network to api.tcgdex.net from the sandbox): Run it against live TCGdex and write `report.md`.** Pass means at least 98% of the newest sets' cards are found with rarity and image, at least 90% have a TCGplayer or Cardmarket price, and all 20 tricky cards are found with the right variant. On a fail, record Scrydex as the replacement behind the provider interface in Task 7, and tell the owner before continuing.
 * [ ] **Step 6: Read the licence** in the `tcgdex/cards-database` repository and the TCGdex terms, then record whether commercial use in a public app is allowed in the design doc's open questions.
 * [ ] **Step 7: Commit** with `chore: tcgdex source test and report`.
 

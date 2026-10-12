@@ -168,8 +168,8 @@ Several features are deliberately left out of sub-project 1, and four questions 
 
 **Open questions**
 
-- [ ] Card images: hotlink TCGdex image URLs, or copy them into our own storage? This depends on the licence.
-- [ ] Sync schedule: catalog per set release, prices hourly or daily? Does TCGdex's licence allow commercial use in a public app?
+- [ ] Card images: hotlink TCGdex image URLs, or copy them into our own storage? This depends on the licence. Checked 2026-10-13: the `tcgdex/cards-database` repo is MIT, but the MIT text does not say who owns the card art, and the repo states it is not affiliated with Nintendo or The Pokémon Company. Image rights stay unresolved; ask the TCGdex maintainers before copying images into our storage.
+- [ ] Sync schedule: catalog per set release, prices hourly or daily? TCGdex licence (checked 2026-10-13): the database is MIT, which allows commercial use if the copyright and permission notice are kept. The site tcgdex.dev has no separate terms, rate limits or attribution rule. This is not legal advice; the Pokémon card names and art are still Nintendo / The Pokémon Company property.
 - [ ] Phone OTP provider and its per-message cost in Malaysia.
 - [ ] Dispute handling: what happens when a buyer and seller disagree about a completed deal?
 
