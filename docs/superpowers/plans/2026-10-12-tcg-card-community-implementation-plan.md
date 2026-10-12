@@ -141,11 +141,11 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 
 - Produces: a decision in `SPIKE.md` between fragment shaders and layered gradients for the foil styles, with measured frame times.
 
-* [ ] **Step 1: Build `spike_page.dart`** showing one large card with tilt and the SIR rainbow foil shader, and a 3-column grid of 9 cards with a static foil where only the touched card tilts.
-* [ ] **Step 2: Run it on the lowest-end Android phone you have and on an iPhone** in profile mode, and record the average frame time over 10 seconds of tilting.
-* [ ] **Step 3: Apply the threshold:** average at least 45 frames per second for the single card, and at least 30 for the grid. If shaders miss it, repeat Step 2 with layered gradients and blend modes.
-* [ ] **Step 4: Write the decision and the numbers in `SPIKE.md`.** Task 8 builds `RarityCard` on whichever approach passed.
-* [ ] **Step 5: Commit** the note only, with `docs: foil shader spike result`. Delete `spike/`.
+* [x] **Step 1 (skipped by the owner, no spike page built): Build `spike_page.dart`** showing one large card with tilt and the SIR rainbow foil shader, and a 3-column grid of 9 cards with a static foil where only the touched card tilts.
+* [x] **Step 2 (skipped by the owner, nothing measured): Run it on the lowest-end Android phone you have and on an iPhone** in profile mode, and record the average frame time over 10 seconds of tilting.
+* [x] **Step 3 (owner set 45 fps single / 30 grid as the target; no measurement): Apply the threshold:** average at least 45 frames per second for the single card, and at least 30 for the grid. If shaders miss it, repeat Step 2 with layered gradients and blend modes.
+* [x] **Step 4 (note written, decision is shaders): Write the decision and the numbers in `SPIKE.md`.** Task 8 builds `RarityCard` on whichever approach passed.
+* [x] **Step 5: Commit** the note only, with `docs: foil shader spike result`. Delete `spike/`.
 
 ## Phase 1: backend foundations
 
