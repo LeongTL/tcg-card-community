@@ -15,6 +15,5 @@ Things skipped or waiting on someone. Updated after every task. Remove a line wh
 | setup | TODO: decide inline (executing-plans) vs subagent mode for Tasks 4+, and the model tiers | You |
 | 1 | TODO: build the `staging` and `prod` Android flavors once to confirm (only `dev` was built) | Next Flutter run |
 | open | Open questions from CLAUDE.md: TCGdex licence, Pokémon Price Tracker licence, SMS provider for OTP, FX source (default Frankfurter), dispute handling, Malaysia-only launch | You |
-| 4 | TODO: Step 6 commit (`feat(db): module schemas, policies and rls tests`) | The user's go |
 | 4 | TODO: hosted projects need the same API schema list (`supabase config push`, then check Settings > API on `TCG-stg`); the deploy workflow only runs `db push` | You or a later pass |
 | 5 | NOTE: the seed inserts profiles directly; the sign-up trigger in Task 5 must use `on conflict do nothing` so `supabase db reset` still works | Task 5 |

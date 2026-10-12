@@ -172,7 +172,7 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 * [x] **Step 3: Write the migrations** so each module's tables live in its own schema, with the policies the tests need. Cross-module reads go through the two views only. In `0160_api_and_realtime.sql`: grant `usage` on each module schema to `authenticated` and `service_role` (never `anon`), grant table and function privileges only where a policy or function needs them, set default privileges so later migrations inherit them, and add `deals.messages` and `identity.notifications` to the `supabase_realtime` publication. List the five schemas in `[api] schemas` in `config.toml`; hosted projects take the same list through `supabase config push` (confirm under Settings, API in the dashboard). Without this the Flutter client cannot reach any table or function outside `public`.
 * [x] **Step 4: Run `supabase test db`.** Expected: all tests PASS.
 * [x] **Step 5: Add `seed.sql`** with 30 cards covering every foil style, 5 users and a few listings, and confirm `supabase db reset` loads it.
-* [ ] **Step 6: Commit** with `feat(db): module schemas, policies and rls tests`.
+* [x] **Step 6: Commit** with `feat(db): module schemas, policies and rls tests`.
 
 ### Task 5: Sign-up trigger, phone OTP and verification gating
 
