@@ -186,11 +186,11 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 - Consumes: the tables from Task 4.
 - Produces: trigger `identity.on_auth_user_created()` creating a `profiles` row and a `user_flags` row; trigger `identity.on_phone_confirmed()` setting `phone_verified_at` and `verification_level = 1`; policies requiring `verification_level >= 1` to insert into `listings.listings` and `deals.deals`.
 
-* [ ] **Step 1: Write failing tests:** `signup_creates_profile_and_flags_rows` (`enable_foil_effect` is false), `phone_confirmation_sets_level_1`, `unverified_user_cannot_insert_listing`, `unverified_user_cannot_start_deal`, `verified_user_can_insert_listing`.
-* [ ] **Step 2: Run `supabase test db`.** Expected: FAIL.
-* [ ] **Step 3: Implement the two triggers and the two policies.** Phone OTP uses Supabase Auth's phone provider; record the chosen SMS provider and its cost per message in the design doc's open questions.
-* [ ] **Step 4: Run `supabase test db`.** Expected: PASS.
-* [ ] **Step 5: Commit** with `feat(identity): signup trigger, phone verification and gating`.
+* [x] **Step 1: Write failing tests:** `signup_creates_profile_and_flags_rows` (`enable_foil_effect` is false), `phone_confirmation_sets_level_1`, `unverified_user_cannot_insert_listing`, `unverified_user_cannot_start_deal`, `verified_user_can_insert_listing`.
+* [x] **Step 2: Run `supabase test db`.** Expected: FAIL.
+* [x] **Step 3: Implement the two triggers and the two policies.** Phone OTP uses Supabase Auth's phone provider; record the chosen SMS provider and its cost per message in the design doc's open questions.
+* [x] **Step 4: Run `supabase test db`.** Expected: PASS.
+* [x] **Step 5: Commit** with `feat(identity): signup trigger, phone verification and gating`.
 
 ### Task 6: Catalog sync job
 

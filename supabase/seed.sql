@@ -47,7 +47,9 @@ insert into identity.profiles (id, display_name, city, verification_level) value
   ('00000000-0000-0000-0000-000000000003', 'Wei Jie', 'Kuala Lumpur', 1),
   ('00000000-0000-0000-0000-000000000004', 'Priya', 'Kuala Lumpur', 0),
   ('00000000-0000-0000-0000-000000000005', 'Daniel', 'Kuala Lumpur', 0)
-on conflict (id) do nothing;
+-- the sign-up trigger already made empty profile rows for the users above
+on conflict (id) do update set display_name = excluded.display_name, city = excluded.city,
+  verification_level = excluded.verification_level;
 
 insert into identity.user_flags (user_id) select id from identity.profiles on conflict do nothing;
 
