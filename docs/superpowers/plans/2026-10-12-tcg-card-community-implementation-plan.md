@@ -220,12 +220,12 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 - Produces: `interface PriceProvider { fetchPrices(cardIds: string[]): Promise<PriceRow[]> }` with `TcgdexPriceProvider` as the only implementation (a replacement provider is a new class, not an app change); SQL `catalog.change_pct(card_id text, days int) returns numeric`; view `catalog.card_price_view(card_id, low_rm, market_rm, high_rm, change_1d, change_7d, change_30d, updated_at)`.
 - Rule: `change_pct` returns null when the earlier price is missing or zero. It uses the `price_history` row from `today - days` when one exists, and otherwise `avg1`, `avg7` or `avg30` from `card_prices`.
 
-* [ ] **Step 1: Write failing SQL tests:** `change_pct_is_minus_50_when_price_goes_from_2_to_1`, `change_pct_is_null_when_earlier_price_is_zero`, `change_pct_is_null_when_no_earlier_price`, `card_without_price_has_null_prices_not_zero`, `usd_price_converts_to_rm_using_stored_rate`.
-* [ ] **Step 2: Write failing function tests:** `price_sync_twice_same_day_writes_one_history_row`, `price_sync_does_not_delete_cards_or_prices_when_provider_fails`, `price_sync_skips_cards_the_provider_omits`.
-* [ ] **Step 3: Run `supabase test db` and `deno test supabase/functions/sync-prices`.** Expected: FAIL.
-* [ ] **Step 4: Implement the SQL function and view, the provider and `sync-prices`.** It writes `card_prices` and one `price_history` row per card, source and day, and refreshes `catalog.fx_rates` for USD and EUR from an exchange-rate API (the owner confirms which one; an ECB-based free service such as Frankfurter is the default). Run it hourly to daily.
-* [ ] **Step 5: Run both test suites.** Expected: PASS.
-* [ ] **Step 6: Commit** with `feat(catalog): price sync, history and change percent`.
+* [x] **Step 1: Write failing SQL tests:** `change_pct_is_minus_50_when_price_goes_from_2_to_1`, `change_pct_is_null_when_earlier_price_is_zero`, `change_pct_is_null_when_no_earlier_price`, `card_without_price_has_null_prices_not_zero`, `usd_price_converts_to_rm_using_stored_rate`.
+* [x] **Step 2: Write failing function tests:** `price_sync_twice_same_day_writes_one_history_row`, `price_sync_does_not_delete_cards_or_prices_when_provider_fails`, `price_sync_skips_cards_the_provider_omits`.
+* [x] **Step 3: Run `supabase test db` and `deno test supabase/functions/sync-prices`.** Expected: FAIL.
+* [x] **Step 4: Implement the SQL function and view, the provider and `sync-prices`.** It writes `card_prices` and one `price_history` row per card, source and day, and refreshes `catalog.fx_rates` for USD and EUR from an exchange-rate API (the owner confirms which one; an ECB-based free service such as Frankfurter is the default). Run it hourly to daily.
+* [x] **Step 5: Run both test suites.** Expected: PASS.
+* [x] **Step 6: Commit** with `feat(catalog): price sync, history and change percent`.
 
 ## Phase 2: core app
 
