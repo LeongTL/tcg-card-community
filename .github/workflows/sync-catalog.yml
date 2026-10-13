@@ -1,0 +1,27 @@
+name: Sync catalog
+
+on:
+  schedule:
+    - cron: '0 20 * * 0' # weekly, Sunday 20:00 UTC (Monday 04:00 in Malaysia), staging only
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: staging or prod
+        default: staging
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_REF: ${{ inputs.environment == 'prod' && secrets.PROD_PROJECT_REF || secrets.STAGING_PROJECT_REF }}
+      SERVICE_ROLE_KEY: ${{ inputs.environment == 'prod' && secrets.PROD_SERVICE_ROLE_KEY || secrets.STAGING_SERVICE_ROLE_KEY }}
+    steps:
+      # Ten sets per call keeps each call inside the Edge Function time limit.
+      - name: Call sync-catalog in chunks
+        run: |
+          set -euo pipefail
+          curl -sf https://api.tcgdex.net/v2/en/sets | jq -r '.[].id' | xargs -n 10 | tr ' ' ',' | while read -r sets; do
+            curl -sS --max-time 150 -X POST "https://$PROJECT_REF.supabase.co/functions/v1/sync-catalog?sets=$sets" \
+              -H "Authorization: Bearer $SERVICE_ROLE_KEY"
+            echo
+          done

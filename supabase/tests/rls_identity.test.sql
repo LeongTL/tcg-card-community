@@ -4,10 +4,6 @@ select plan(5);
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000000a1', 'a1@test.dev'),
   ('00000000-0000-0000-0000-0000000000a2', 'a2@test.dev');
-insert into identity.profiles (id, display_name) values
-  ('00000000-0000-0000-0000-0000000000a1', 'One'),
-  ('00000000-0000-0000-0000-0000000000a2', 'Two');
-insert into identity.user_flags (user_id) values ('00000000-0000-0000-0000-0000000000a1');
 insert into identity.notifications (id, user_id, type) values
   ('00000000-0000-0000-0000-0000000000b1', '00000000-0000-0000-0000-0000000000a1', 'x'),
   ('00000000-0000-0000-0000-0000000000b2', '00000000-0000-0000-0000-0000000000a2', 'x');

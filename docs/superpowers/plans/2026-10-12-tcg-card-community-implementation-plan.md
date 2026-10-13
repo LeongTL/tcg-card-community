@@ -125,8 +125,8 @@ This task decides whether TCGdex is good enough. Nothing later is built on it un
 * [x] **Step 2: Run `npx vitest tools/source-test`.** Expected: FAIL.
 * [x] **Step 3 (`cards.json` still empty, TODO: the 20 tricky card IDs; `run.ts` written but never run): Implement `checkCards`** against the TCGdex REST API in English, using the three newest sets from `/sets` plus the 20 tricky cards in `cards.json` (reprints, promos, holo and reverse holo variants).
 * [x] **Step 4: Run the unit tests.** Expected: PASS.
-* [ ] **Step 5 (TODO, no network to api.tcgdex.net from the sandbox): Run it against live TCGdex and write `report.md`.** Pass means at least 98% of the newest sets' cards are found with rarity and image, at least 90% have a TCGplayer or Cardmarket price, and all 20 tricky cards are found with the right variant. On a fail, record Scrydex as the replacement behind the provider interface in Task 7, and tell the owner before continuing.
-* [ ] **Step 6: Read the licence** in the `tcgdex/cards-database` repository and the TCGdex terms, then record whether commercial use in a public app is allowed in the design doc's open questions.
+* [x] **Step 5 (run 2026-10-13; owner-approved fixed sample passes, see report.md): Run it against live TCGdex and write `report.md`.** Pass means at least 98% of the newest sets' cards are found with rarity and image, at least 90% have a TCGplayer or Cardmarket price, and all 20 tricky cards are found with the right variant. On a fail, record Scrydex as the replacement behind the provider interface in Task 7, and tell the owner before continuing.
+* [x] **Step 6 (MIT data; owner confirmed with TCGdex that images can be used): Read the licence** in the `tcgdex/cards-database` repository and the TCGdex terms, then record whether commercial use in a public app is allowed in the design doc's open questions.
 * [x] **Step 7: Commit** with `chore: tcgdex source test and report`.
 
 ### Task 3: Foil shader spike
@@ -186,11 +186,11 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 - Consumes: the tables from Task 4.
 - Produces: trigger `identity.on_auth_user_created()` creating a `profiles` row and a `user_flags` row; trigger `identity.on_phone_confirmed()` setting `phone_verified_at` and `verification_level = 1`; policies requiring `verification_level >= 1` to insert into `listings.listings` and `deals.deals`.
 
-* [ ] **Step 1: Write failing tests:** `signup_creates_profile_and_flags_rows` (`enable_foil_effect` is false), `phone_confirmation_sets_level_1`, `unverified_user_cannot_insert_listing`, `unverified_user_cannot_start_deal`, `verified_user_can_insert_listing`.
-* [ ] **Step 2: Run `supabase test db`.** Expected: FAIL.
-* [ ] **Step 3: Implement the two triggers and the two policies.** Phone OTP uses Supabase Auth's phone provider; record the chosen SMS provider and its cost per message in the design doc's open questions.
-* [ ] **Step 4: Run `supabase test db`.** Expected: PASS.
-* [ ] **Step 5: Commit** with `feat(identity): signup trigger, phone verification and gating`.
+* [x] **Step 1: Write failing tests:** `signup_creates_profile_and_flags_rows` (`enable_foil_effect` is false), `phone_confirmation_sets_level_1`, `unverified_user_cannot_insert_listing`, `unverified_user_cannot_start_deal`, `verified_user_can_insert_listing`.
+* [x] **Step 2: Run `supabase test db`.** Expected: FAIL.
+* [x] **Step 3: Implement the two triggers and the two policies.** Phone OTP uses Supabase Auth's phone provider; record the chosen SMS provider and its cost per message in the design doc's open questions.
+* [x] **Step 4: Run `supabase test db`.** Expected: PASS.
+* [x] **Step 5: Commit** with `feat(identity): signup trigger, phone verification and gating`.
 
 ### Task 6: Catalog sync job
 
@@ -202,11 +202,11 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 
 - Produces: `foilStyleFor(rarity: string): FoilStyle` where `FoilStyle = 'sir' | 'alt' | 'ultra' | 'holo' | 'gold' | 'reverse' | 'shiny' | 'cosmos' | 'plain'`; `syncCatalog(client: TcgdexClient, db: Db): Promise<{ upserted: number; failed: number }>`.
 
-* [ ] **Step 1: Write failing tests:** `foil_style_maps_special_illustration_rare_to_sir`, `foil_style_maps_unknown_rarity_to_plain`, `sync_is_idempotent_when_run_twice` (second run upserts the same count and the table row count does not change), `sync_never_deletes_cards` (a card missing from the provider stays), `sync_keeps_existing_cards_when_provider_fails_midway` (rows from before are intact and `failed` is above 0).
-* [ ] **Step 2: Run `deno test supabase/functions/sync-catalog`.** Expected: FAIL.
-* [ ] **Step 3: Implement the mapping and `syncCatalog`** as an upsert keyed on the TCGdex id, in batches, never truncating. Schedule it weekly and allow a manual run.
-* [ ] **Step 4: Run the tests.** Expected: PASS.
-* [ ] **Step 5: Run it once against staging** and confirm the `catalog.cards` row count is within 1% of TCGdex's count.
+* [x] **Step 1: Write failing tests:** `foil_style_maps_special_illustration_rare_to_sir`, `foil_style_maps_unknown_rarity_to_plain`, `sync_is_idempotent_when_run_twice` (second run upserts the same count and the table row count does not change), `sync_never_deletes_cards` (a card missing from the provider stays), `sync_keeps_existing_cards_when_provider_fails_midway` (rows from before are intact and `failed` is above 0).
+* [x] **Step 2: Run `deno test supabase/functions/sync-catalog`.** Expected: FAIL.
+* [x] **Step 3: Implement the mapping and `syncCatalog`** as an upsert keyed on the TCGdex id, in batches, never truncating. Schedule it weekly and allow a manual run.
+* [x] **Step 4: Run the tests.** Expected: PASS.
+* [ ] **Step 5 (TODO: deploy to staging was blocked by the permission check, owner to run or allow; local run of `?sets=me05,sv03.5` upserted 327 twice with 0 failed): Run it once against staging** and confirm the `catalog.cards` row count is within 1% of TCGdex's count.
 * [ ] **Step 6: Commit** with `feat(catalog): tcgdex catalog sync`.
 
 ### Task 7: Price sync, history and change percent
