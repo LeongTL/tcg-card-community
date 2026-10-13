@@ -206,7 +206,7 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 * [x] **Step 2: Run `deno test supabase/functions/sync-catalog`.** Expected: FAIL.
 * [x] **Step 3: Implement the mapping and `syncCatalog`** as an upsert keyed on the TCGdex id, in batches, never truncating. Schedule it weekly and allow a manual run.
 * [x] **Step 4: Run the tests.** Expected: PASS.
-* [ ] **Step 5 (TODO: deploy to staging was blocked by the permission check, owner to run or allow; local run of `?sets=me05,sv03.5` upserted 327 twice with 0 failed): Run it once against staging** and confirm the `catalog.cards` row count is within 1% of TCGdex's count.
+* [x] **Step 5 (2026-10-13: staging holds 23,736 cards in 216 sets, equal to what TCGdex lists and 99.05% of its headline 23,964): Run it once against staging** and confirm the `catalog.cards` row count is within 1% of TCGdex's count.
 * [ ] **Step 6: Commit** with `feat(catalog): tcgdex catalog sync`.
 
 ### Task 7: Price sync, history and change percent
