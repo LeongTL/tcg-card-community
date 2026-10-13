@@ -156,7 +156,7 @@ The release is gated by security tests on the database and a closed beta with re
 - [ ] Report and block for users and listings
 - [ ] Safe-meetup guidance (public places) inside the deal flow
 - [ ] Crash reporting (Crashlytics or Sentry) and basic analytics
-- [ ] Card image licensing and price-data terms checked (TCGdex)
+- [x] Card image licensing and price-data terms checked (TCGdex)
 - [ ] Catalog and price sync run against production, with daily history snapshots scheduled
 - [ ] Closed beta of 20 to 50 collectors on TestFlight and Play internal testing
 
@@ -168,7 +168,7 @@ Several features are deliberately left out of sub-project 1, and four questions 
 
 **Open questions**
 
-- [ ] Card images: hotlink TCGdex image URLs, or copy them into our own storage? This depends on the licence. Checked 2026-10-13: the `tcgdex/cards-database` repo is MIT, but the MIT text does not say who owns the card art, and the repo states it is not affiliated with Nintendo or The Pokémon Company. Image rights stay unresolved; ask the TCGdex maintainers before copying images into our storage.
+- [x] Card images: hotlink TCGdex image URLs, or copy them into our own storage? This depends on the licence. Checked 2026-10-13: the `tcgdex/cards-database` repo is MIT, but the MIT text does not say who owns the card art, and the repo states it is not affiliated with Nintendo or The Pokémon Company. Owner asked the TCGdex maintainers (2026-10-13) and was told the images can be used. Record the written reply in `docs/ops/` if there is one.
 - [ ] Sync schedule: catalog per set release, prices hourly or daily? TCGdex licence (checked 2026-10-13): the database is MIT, which allows commercial use if the copyright and permission notice are kept. The site tcgdex.dev has no separate terms, rate limits or attribution rule. This is not legal advice; the Pokémon card names and art are still Nintendo / The Pokémon Company property.
 - [ ] Phone OTP provider and its per-message cost in Malaysia.
 - [ ] Dispute handling: what happens when a buyer and seller disagree about a completed deal?

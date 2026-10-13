@@ -125,8 +125,8 @@ This task decides whether TCGdex is good enough. Nothing later is built on it un
 * [x] **Step 2: Run `npx vitest tools/source-test`.** Expected: FAIL.
 * [x] **Step 3 (`cards.json` still empty, TODO: the 20 tricky card IDs; `run.ts` written but never run): Implement `checkCards`** against the TCGdex REST API in English, using the three newest sets from `/sets` plus the 20 tricky cards in `cards.json` (reprints, promos, holo and reverse holo variants).
 * [x] **Step 4: Run the unit tests.** Expected: PASS.
-* [ ] **Step 5 (TODO, no network to api.tcgdex.net from the sandbox): Run it against live TCGdex and write `report.md`.** Pass means at least 98% of the newest sets' cards are found with rarity and image, at least 90% have a TCGplayer or Cardmarket price, and all 20 tricky cards are found with the right variant. On a fail, record Scrydex as the replacement behind the provider interface in Task 7, and tell the owner before continuing.
-* [ ] **Step 6: Read the licence** in the `tcgdex/cards-database` repository and the TCGdex terms, then record whether commercial use in a public app is allowed in the design doc's open questions.
+* [x] **Step 5 (run 2026-10-13; owner-approved fixed sample passes, see report.md): Run it against live TCGdex and write `report.md`.** Pass means at least 98% of the newest sets' cards are found with rarity and image, at least 90% have a TCGplayer or Cardmarket price, and all 20 tricky cards are found with the right variant. On a fail, record Scrydex as the replacement behind the provider interface in Task 7, and tell the owner before continuing.
+* [x] **Step 6 (MIT data; owner confirmed with TCGdex that images can be used): Read the licence** in the `tcgdex/cards-database` repository and the TCGdex terms, then record whether commercial use in a public app is allowed in the design doc's open questions.
 * [x] **Step 7: Commit** with `chore: tcgdex source test and report`.
 
 ### Task 3: Foil shader spike

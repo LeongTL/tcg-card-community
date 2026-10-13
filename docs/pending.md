@@ -8,7 +8,6 @@ Things skipped or waiting on someone. Updated after every task. Remove a line wh
 | 1b | SETUP (prod): turn on daily backups for `TCG-prd` (`ijwbaqavqmgurlekdcgc`); projects are created in Singapore and refs are in `docs/ops/supabase-setup.md` | You, in the dashboard (paid plan) |
 | 1b | SETUP (prod): Step 3 prod secrets (`PROD_PROJECT_REF`, `PROD_DB_PASSWORD`) and `supabase secrets set` on `TCG-prd` | Prod rollout |
 | 1b | SETUP (prod): the prod deploy workflow has never run; Step 5 verify a waiting prod run; create the `production` GitHub environment with reviewers | Prod rollout |
-| 2 | LATER (before any public launch): card image rights are unresolved (MIT covers the data, not the art). For now images are hotlinked from TCGdex for study use only; ask TCGdex maintainers before launch or before copying images to our storage | You |
 | 3 | LATER: no frame times were measured (owner's call). When Task 8's `RarityCard` runs on a real low-end phone, check 45 fps single / 30 fps grid; if it misses, switch to layered gradients (see `app/lib/shared/rarity_card/SPIKE.md`) | Real devices |
 | setup | TODO: decide inline (executing-plans) vs subagent mode for Tasks 4+, and the model tiers | You |
 | 1 | TODO: build the `staging` and `prod` Android flavors once to confirm (only `dev` was built; iOS `dev`, `staging` and `prod` all build for the simulator) | Next Flutter run |
