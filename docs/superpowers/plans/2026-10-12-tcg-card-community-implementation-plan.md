@@ -202,11 +202,11 @@ This is throwaway code. Its output is a measurement and a decision, not a merged
 
 - Produces: `foilStyleFor(rarity: string): FoilStyle` where `FoilStyle = 'sir' | 'alt' | 'ultra' | 'holo' | 'gold' | 'reverse' | 'shiny' | 'cosmos' | 'plain'`; `syncCatalog(client: TcgdexClient, db: Db): Promise<{ upserted: number; failed: number }>`.
 
-* [ ] **Step 1: Write failing tests:** `foil_style_maps_special_illustration_rare_to_sir`, `foil_style_maps_unknown_rarity_to_plain`, `sync_is_idempotent_when_run_twice` (second run upserts the same count and the table row count does not change), `sync_never_deletes_cards` (a card missing from the provider stays), `sync_keeps_existing_cards_when_provider_fails_midway` (rows from before are intact and `failed` is above 0).
-* [ ] **Step 2: Run `deno test supabase/functions/sync-catalog`.** Expected: FAIL.
-* [ ] **Step 3: Implement the mapping and `syncCatalog`** as an upsert keyed on the TCGdex id, in batches, never truncating. Schedule it weekly and allow a manual run.
-* [ ] **Step 4: Run the tests.** Expected: PASS.
-* [ ] **Step 5: Run it once against staging** and confirm the `catalog.cards` row count is within 1% of TCGdex's count.
+* [x] **Step 1: Write failing tests:** `foil_style_maps_special_illustration_rare_to_sir`, `foil_style_maps_unknown_rarity_to_plain`, `sync_is_idempotent_when_run_twice` (second run upserts the same count and the table row count does not change), `sync_never_deletes_cards` (a card missing from the provider stays), `sync_keeps_existing_cards_when_provider_fails_midway` (rows from before are intact and `failed` is above 0).
+* [x] **Step 2: Run `deno test supabase/functions/sync-catalog`.** Expected: FAIL.
+* [x] **Step 3: Implement the mapping and `syncCatalog`** as an upsert keyed on the TCGdex id, in batches, never truncating. Schedule it weekly and allow a manual run.
+* [x] **Step 4: Run the tests.** Expected: PASS.
+* [ ] **Step 5 (TODO: deploy to staging was blocked by the permission check, owner to run or allow; local run of `?sets=me05,sv03.5` upserted 327 twice with 0 failed): Run it once against staging** and confirm the `catalog.cards` row count is within 1% of TCGdex's count.
 * [ ] **Step 6: Commit** with `feat(catalog): tcgdex catalog sync`.
 
 ### Task 7: Price sync, history and change percent
